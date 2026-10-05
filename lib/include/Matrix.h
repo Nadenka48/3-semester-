@@ -43,7 +43,7 @@ public:
      * @param r Количество строк
      * @param c Количество столбцов
      */
-    Matrix(size_t r, size_t c);
+    Matrix(const size_t r,const size_t c);
     /**
      * @brief Конструктор копирования
      * @param other Матрица для копирования
@@ -87,13 +87,13 @@ public:
      * @param index Индекс строки
      * @return Указатель на начало строки
      */
-    int *operator[](size_t index);
+    int *operator[](const size_t index);
     /**
      * @brief Доступ к строке матрицы
      * @param index Индекс строки
      * @return Константный указатель на начало строки
      */
-    const int *operator[](size_t index) const;
+    const int *operator[](const size_t index) const;
     /**
      * @brief Получить количество строк
      * @return Количество строк
@@ -119,12 +119,12 @@ public:
      * @param rowIndex Индекс строки, после которой нужно вставить новую
      * @param newRow Указатель на массив новой строки
      */
-    void insertRowAfter(size_t rowIndex, const int *newRow);
+    void insertRowAfter(const size_t rowIndex, const int *newRow);
     /**
      * @brief Удаление столбца по индексу
      * @param colIndex Индекс удаляемого столбца
      */
-    void removeColumn(size_t colIndex);
+    void removeColumn(const size_t colIndex);
     /**
      * @brief Оператор вывода в поток
      * @param os Поток вывода
