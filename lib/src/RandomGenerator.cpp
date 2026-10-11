@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <algorithm>
 
-RandomGenerator::RandomGenerator(int min, int max)
+RandomGenerator::RandomGenerator(const int min,const int max)
 {
     min_val = std::min(min, max);
     max_val = std::max(min, max);
