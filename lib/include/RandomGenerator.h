@@ -22,7 +22,7 @@ public:
      * @param min Минимальное значение
      * @param max Максимальное значение
      */
-    RandomGenerator(int min, int max);
+    RandomGenerator(const int min,const int max);
     /**
      * @brief Перегруженный деструктор
      */
