@@ -30,7 +30,7 @@ void Matrix::freeMemory()
 
 Matrix::Matrix() : rows(0), columns(0), data(nullptr) {}
 
-Matrix::Matrix(size_t r, size_t c) : rows(r), columns(c), data(nullptr)
+Matrix::Matrix(const size_t r,const size_t c) : rows(r), columns(c), data(nullptr)
 {
     allocateMemory();
 }
