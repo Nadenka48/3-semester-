@@ -8,9 +8,6 @@
 #include "Task1Exercise.h"
 #include "Task2Exercise.h"
 
-/**
- * @brief enum для выбора генератора
- */
 enum gen
 {
     random_fill = 1,
@@ -18,9 +15,6 @@ enum gen
     input_fill
 };
 
-/**
- * @brief enum для выбора задания
- */
 enum task
 {
     task1_choice = 1,
@@ -29,8 +23,7 @@ enum task
 
 size_t getPos(const char *message);
 int getInt(const char *message);
-Generator *chooseGenerator(const char *message);
-void runTask(Matrix &matrix, const Generator &generator); // Обновлено по код-ревью
+void runTask(Matrix &matrix, const Generator &generator);
 
 int main(void)
 {
@@ -41,15 +34,70 @@ int main(void)
 
     Matrix matrix(rows, columns);
 
-    Generator *generator = chooseGenerator("Выберите тип заполнения массива:");
-    matrix.fillArray(*generator);
+    std::cout << "Выберите тип заполнения массива:\n"
+              << random_fill << " - случайными числами\n"
+              << const_fill << " - одинаковым числом (константой)\n"
+              << input_fill << " - ввод с клавиатуры\n"
+              << std::endl;
+    int var = getInt("");
+
+    switch (var)
+    {
+    case random_fill:
+    {
+        int minVal = getInt("Введите минимум диапазона:");
+        int maxVal = getInt("Введите максимум диапазона:");
+        RandomGenerator genObj(minVal, maxVal);
+        matrix.fillArray(genObj);
+        break;
+    }
+    case const_fill:
+    {
+        int value = getInt("Введите значение константы:");
+        ConstGenerator genObj(value);
+        matrix.fillArray(genObj);
+        break;
+    }
+    case input_fill:
+    {
+        std::cout << "Введите значения массива:\n";
+        InputGenerator genObj(std::cin);
+        matrix.fillArray(genObj);
+        break;
+    }
+    default:
+        std::cerr << "Некорректный выбор" << std::endl;
+        std::exit(1);
+    }
 
     std::cout << "Полученная матрица:\n"
               << matrix.toString() << std::endl;
 
-    runTask(matrix, *generator);
+    switch (var)
+    {
+    case random_fill:
+    {
+        int minVal = 0;
+        int maxVal = 0;
+        RandomGenerator genObj(minVal, maxVal);
+        runTask(matrix, genObj);
+        break;
+    }
+    case const_fill:
+    {
+        int value = 0;
+        ConstGenerator genObj(value);
+        runTask(matrix, genObj);
+        break;
+    }
+    case input_fill:
+    {
+        InputGenerator genObj(std::cin);
+        runTask(matrix, genObj);
+        break;
+    }
+    }
 
-    delete generator;
     return 0;
 }
 
@@ -73,38 +121,6 @@ int getInt(const char *message)
         return value;
     std::cerr << "Некорректный ввод" << std::endl;
     std::exit(1);
-}
-
-Generator *chooseGenerator(const char *message)
-{
-    std::cout << message << std::endl;
-    std::cout << random_fill << " - случайными числами\n"
-              << const_fill << " - одинаковым числом (константой)\n"
-              << input_fill << " - ввод с клавиатуры\n"
-              << std::endl;
-    int var = getInt("");
-    switch (var)
-    {
-    case random_fill:
-    {
-        int minVal = getInt("Введите минимум диапазона:");
-        int maxVal = getInt("Введите максимум диапазона:");
-        return new RandomGenerator(minVal, maxVal);
-    }
-    case const_fill:
-    {
-        int value = getInt("Введите значение константы:");
-        return new ConstGenerator(value);
-    }
-    case input_fill:
-    {
-        std::cout << "Введите значения массива:\n";
-        return new InputGenerator(std::cin);
-    }
-    default:
-        std::cerr << "Некорректный выбор" << std::endl;
-        std::exit(1);
-    }
 }
 
 void runTask(Matrix &matrix, const Generator &generator)
