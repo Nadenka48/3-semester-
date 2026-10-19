@@ -1,111 +1,14 @@
 #include "Matrix.h"
 #include <sstream>
 
-void Matrix::allocateMemory()
-{
-    if (rows == 0 || columns == 0)
-    {
-        data = nullptr;
-        return;
-    }
-    data = new int *[rows];
-    for (size_t i = 0; i < rows; i++)
-    {
-        data[i] = new int[columns]{0};
-    }
-}
+Matrix::Matrix() : rows(0), columns(0), data() {}
 
-void Matrix::freeMemory()
-{
-    if (data)
-    {
-        for (size_t i = 0; i < rows; i++)
-        {
-            delete[] data[i];
-        }
-        delete[] data;
-        data = nullptr;
-    }
-}
-
-Matrix::Matrix() : rows(0), columns(0), data(nullptr) {}
-
-Matrix::Matrix(const size_t r,const size_t c) : rows(r), columns(c), data(nullptr)
-{
-    allocateMemory();
-}
-
-Matrix::Matrix(const Matrix &other) : rows(other.rows), columns(other.columns), data(nullptr)
-{
-    allocateMemory();
-    for (size_t i = 0; i < rows; i++)
-    {
-        for (size_t j = 0; j < columns; j++)
-        {
-            data[i][j] = other.data[i][j];
-        }
-    }
-}
-
-Matrix::Matrix(Matrix &&other) noexcept : rows(other.rows), columns(other.columns), data(other.data)
-{
-    other.rows = 0;
-    other.columns = 0;
-    other.data = nullptr;
-}
-
-Matrix::~Matrix()
-{
-    freeMemory();
-}
-
-Matrix &Matrix::operator=(const Matrix &other)
-{
-    if (this != &other)
-    {
-        freeMemory();
-        rows = other.rows;
-        columns = other.columns;
-        allocateMemory();
-        for (size_t i = 0; i < rows; i++)
-        {
-            for (size_t j = 0; j < columns; j++)
-            {
-                data[i][j] = other.data[i][j];
-            }
-        }
-    }
-    return *this;
-}
-
-Matrix &Matrix::operator=(Matrix &&other) noexcept
-{
-    if (this != &other)
-    {
-        freeMemory();
-        rows = other.rows;
-        columns = other.columns;
-        data = other.data;
-        other.rows = 0;
-        other.columns = 0;
-        other.data = nullptr;
-    }
-    return *this;
-}
+Matrix::Matrix(const size_t r, const size_t c) 
+    : rows(r), columns(c), data(r, std::vector<int>(c, 0)) {}
 
 bool Matrix::operator==(const Matrix &other) const
 {
-    if (rows != other.rows || columns != other.columns)
-        return false;
-    for (size_t i = 0; i < rows; i++)
-    {
-        for (size_t j = 0; j < columns; j++)
-        {
-            if (data[i][j] != other.data[i][j])
-                return false;
-        }
-    }
-    return true;
+    return rows == other.rows && columns == other.columns && data == other.data;
 }
 
 bool Matrix::operator!=(const Matrix &other) const
@@ -113,12 +16,12 @@ bool Matrix::operator!=(const Matrix &other) const
     return !(*this == other);
 }
 
-int *Matrix::operator[](size_t index)
+std::vector<int> &Matrix::operator[](size_t index)
 {
     return data[index];
 }
 
-const int *Matrix::operator[](size_t index) const
+const std::vector<int> &Matrix::operator[](size_t index) const
 {
     return data[index];
 }
@@ -155,26 +58,11 @@ std::string Matrix::toString() const
     return os.str();
 }
 
-void Matrix::insertRowAfter(size_t rowIndex, const int *newRow)
+void Matrix::insertRowAfter(size_t rowIndex, const std::vector<int> &newRow)
 {
     if (rowIndex >= rows)
         return;
-    int **newData = new int *[rows + 1];
-    for (size_t i = 0, newI = 0; i < rows; i++, newI++)
-    {
-        newData[newI] = data[i];
-        if (i == rowIndex)
-        {
-            newI++;
-            newData[newI] = new int[columns];
-            for (size_t j = 0; j < columns; j++)
-            {
-                newData[newI][j] = newRow[j];
-            }
-        }
-    }
-    delete[] data;
-    data = newData;
+    data.insert(data.begin() + rowIndex + 1, newRow);
     rows++;
 }
 
@@ -185,33 +73,16 @@ void Matrix::removeColumn(size_t colIndex)
 
     if (columns == 1)
     {
-        freeMemory();
+        data.clear();
         rows = 0;
         columns = 0;
         return;
     }
 
-    int **newData = new int *[rows];
     for (size_t i = 0; i < rows; ++i)
     {
-        newData[i] = new int[columns - 1];
-        for (size_t j = 0, newJ = 0; j < columns; ++j)
-        {
-            if (j != colIndex)
-            {
-                newData[i][newJ] = data[i][j];
-                newJ++;
-            }
-        }
+        data[i].erase(data[i].begin() + colIndex);
     }
-
-    for (size_t i = 0; i < rows; i++)
-    {
-        delete[] data[i];
-    }
-    delete[] data;
-
-    data = newData;
     columns--;
 }
 
