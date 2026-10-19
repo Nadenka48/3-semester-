@@ -7,24 +7,45 @@
 #include "InputGenerator.h"
 #include "Task1Exercise.h"
 #include "Task2Exercise.h"
-
+/**
+ * @brief enum для выбора генератора
+ */
 enum gen
 {
     random_fill = 1,
     const_fill,
     input_fill
 };
-
+/**
+ * @brief enum для выбора задания
+ */
 enum task
 {
     task1_choice = 1,
     task2_choice
 };
-
+/**
+ * @brief Функция для получения целого положительного числа
+ * @param message - сообщение
+ * @return полученное число, если ввод успешен, иначе - завершает программу
+ */
 size_t getPos(const char *message);
+/**
+ * @brief Функция для получения целого числа
+ * @param message - сообщение
+ * @return полученное число, если ввод успешен, иначе - завершает программу
+ */
 int getInt(const char *message);
+/**
+ * @brief Функция выбора задания
+ * @param matrix - ссылка на матрицу matrix
+ * @param generator - ссылка на генератор
+ */
 void runTask(Matrix &matrix, const Generator &generator);
-
+/**
+ * @brief Точка входа в программу
+ * @return 0, если программа выполнена успешно
+ */
 int main(void)
 {
     system("chcp 65001 > nul");
