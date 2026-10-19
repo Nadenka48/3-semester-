@@ -1,5 +1,6 @@
 #include "Matrix.h"
 #include <sstream>
+#include <stdexcept>
 
 Matrix::Matrix() : rows(0), columns(0), data() {}
 
@@ -18,11 +19,19 @@ bool Matrix::operator!=(const Matrix &other) const
 
 std::vector<int> &Matrix::operator[](size_t index)
 {
+    if (index >= rows)
+    {
+        throw std::out_of_range("Ошибка!");
+    }
     return data[index];
 }
 
 const std::vector<int> &Matrix::operator[](size_t index) const
 {
+    if (index >= rows)
+    {
+        throw std::out_of_range("Matrix row index out of range");
+    }
     return data[index];
 }
 
