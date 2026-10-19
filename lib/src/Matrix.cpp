@@ -19,20 +19,12 @@ bool Matrix::operator!=(const Matrix &other) const
 
 std::vector<int> &Matrix::operator[](size_t index)
 {
-    if (index >= rows)
-    {
-        throw std::out_of_range("Ошибка!");
-    }
-    return data[index];
+    return data.at(index);
 }
 
 const std::vector<int> &Matrix::operator[](size_t index) const
 {
-    if (index >= rows)
-    {
-        throw std::out_of_range("Matrix row index out of range");
-    }
-    return data[index];
+    return data.at(index);
 }
 
 size_t Matrix::getRows() const { return rows; }
@@ -44,7 +36,7 @@ void Matrix::fillArray(const Generator &generator)
     {
         for (size_t j = 0; j < columns; j++)
         {
-            data[i][j] = generator.generate();
+            data.at(i).at(j) = generator.generate();
         }
     }
 }
@@ -59,7 +51,7 @@ std::string Matrix::toString() const
     {
         for (size_t j = 0; j < columns; j++)
         {
-            os << data[i][j] << (j == columns - 1 ? "" : " ");
+            os << data.at(i).at(j) << (j == columns - 1 ? "" : " ");
         }
         if (i != rows - 1)
             os << "\n";
@@ -90,7 +82,7 @@ void Matrix::removeColumn(size_t colIndex)
 
     for (size_t i = 0; i < rows; ++i)
     {
-        data[i].erase(data[i].begin() + colIndex);
+        data.at(i).erase(data.at(i).begin() + colIndex);
     }
     columns--;
 }
