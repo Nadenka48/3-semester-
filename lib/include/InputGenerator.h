@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Generator.h"
+
 /**
  * @brief Класс генератора значений из потока ввода
  */
