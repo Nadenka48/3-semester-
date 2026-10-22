@@ -1,9 +1,17 @@
 #include "RandomGenerator.h"
 #include <cstdlib>
 #include <algorithm>
+#include <ctime>
 
-RandomGenerator::RandomGenerator(const int min,const int max)
+RandomGenerator::RandomGenerator(const int min, const int max)
 {
+    static bool seeded = false;
+    if (!seeded)
+    {
+        std::srand(static_cast<unsigned>(std::time(nullptr)));
+        seeded = true;
+    }
+
     min_val = std::min(min, max);
     max_val = std::max(min, max);
 }
