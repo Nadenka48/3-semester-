@@ -4,7 +4,7 @@
 
 Matrix::Matrix() : rows(0), columns(0), data() {}
 
-Matrix::Matrix(const size_t r, const size_t c) 
+Matrix::Matrix(const size_t r, const size_t c)
     : rows(r), columns(c), data(r, std::vector<int>(c, 0)) {}
 
 bool Matrix::operator==(const Matrix &other) const
@@ -19,11 +19,19 @@ bool Matrix::operator!=(const Matrix &other) const
 
 std::vector<int> &Matrix::operator[](size_t index)
 {
+    if (index >= rows)
+    {
+        throw std::out_of_range("Matrix row index out of range");
+    }
     return data.at(index);
 }
 
 const std::vector<int> &Matrix::operator[](size_t index) const
 {
+    if (index >= rows)
+    {
+        throw std::out_of_range("Matrix row index out of range");
+    }
     return data.at(index);
 }
 
@@ -46,7 +54,6 @@ std::string Matrix::toString() const
     if (rows == 0 || columns == 0)
         return "";
     std::ostringstream os;
-    os << rows << " " << columns << "\n";
     for (size_t i = 0; i < rows; i++)
     {
         for (size_t j = 0; j < columns; j++)
@@ -61,8 +68,9 @@ std::string Matrix::toString() const
 
 void Matrix::insertRowAfter(size_t rowIndex, const std::vector<int> &newRow)
 {
-    if (rowIndex >= rows)
+    if (rowIndex >= rows || newRow.size() != columns)
         return;
+
     data.insert(data.begin() + rowIndex + 1, newRow);
     rows++;
 }
