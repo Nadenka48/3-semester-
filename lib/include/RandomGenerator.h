@@ -1,5 +1,6 @@
 #pragma once
 #include "Generator.h"
+
 /**
  * @brief Класс генератора случайных чисел
  */
@@ -22,11 +23,13 @@ public:
      * @param min Минимальное значение
      * @param max Максимальное значение
      */
-    RandomGenerator(const int min,const int max);
+    RandomGenerator(const int min, const int max);
+
     /**
      * @brief Перегруженный деструктор
      */
     ~RandomGenerator() override = default;
+
     /**
      * @brief Метод генерации
      * @return Случайное число в заданном диапазоне
