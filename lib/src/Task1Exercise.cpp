@@ -2,7 +2,7 @@
 #include <cmath>
 #include <algorithm>
 
-Task1Exercise::Task1Exercise(Matrix &src, const Generator &gen) : Exercise(src, gen) {}
+Task1Exercise::Task1Exercise(Matrix &src) : Exercise(src) {}
 
 Matrix Task1Exercise::solve()
 {
