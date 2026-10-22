@@ -1,5 +1,6 @@
 #pragma once
 #include "Generator.h"
+
 /**
  * @brief Класс генератора константных значений
  */
@@ -17,10 +18,12 @@ public:
      * @param value Значение, которое будет всегда возвращаться
      */
     explicit ConstGenerator(const int value);
+
     /**
      * @brief Перегруженный деструктор
      */
     ~ConstGenerator() override = default;
+
     /**
      * @brief Метод генерации
      * @return Константное значение
