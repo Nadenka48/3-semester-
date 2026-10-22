@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 
 #include "Matrix.h"
 #include "RandomGenerator.h"
@@ -32,14 +33,14 @@ enum task
  * @param message Сообщение для вывода
  * @return Введенное число
  */
-size_t getPos(const char *message);
+size_t getPos(const std::string &message);
 
 /**
  * @brief Получить целое число от пользователя
  * @param message Сообщение для вывода
  * @return Введенное число
  */
-int getInt(const char *message);
+int getInt(const std::string &message);
 
 /**
  * @brief Запустить выбранное задание
@@ -96,17 +97,22 @@ int main(void)
         std::exit(1);
     }
 
-    std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
+    std::cout << "Полученная матрица:\n"
+              << matrix.toString() << std::endl;
 
     runTask(matrix);
 
     return 0;
 }
 
-size_t getPos(const char *message)
+size_t getPos(const std::string &message)
 {
     size_t value = 0;
-    std::cout << message << std::endl;
+    if (!message.empty())
+    {
+        std::cout << message << std::endl;
+    }
+
     if (std::cin >> value && value > 0)
     {
         return value;
@@ -115,10 +121,14 @@ size_t getPos(const char *message)
     std::exit(1);
 }
 
-int getInt(const char *message)
+int getInt(const std::string &message)
 {
     int value = 0;
-    std::cout << message << std::endl;
+    if (!message.empty())
+    {
+        std::cout << message << std::endl;
+    }
+
     if (std::cin >> value)
         return value;
     std::cerr << "Некорректный ввод" << std::endl;
@@ -138,14 +148,16 @@ void runTask(Matrix &matrix)
     {
         Task1Exercise task(matrix);
         Matrix result = task.solve();
-        std::cout << "Результат:\n" << result.toString() << std::endl;
+        std::cout << "Результат:\n"
+                  << result.toString() << std::endl;
         break;
     }
     case task2_choice:
     {
         Task2Exercise task(matrix);
         Matrix result = task.solve();
-        std::cout << "Результат:\n" << result.toString() << std::endl;
+        std::cout << "Результат:\n"
+                  << result.toString() << std::endl;
         break;
     }
     default:
