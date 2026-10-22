@@ -12,12 +12,12 @@ public:
      * @param src Ссылка на матрицу
      */
     explicit Task2Exercise(Matrix &src);
-    
+
     /**
      * @brief Перегруженный деструктор
      */
     ~Task2Exercise() override = default;
-    
+
     /**
      * @brief Выполнить задание 2
      * @return Выполненное задание
