@@ -1,6 +1,6 @@
 #include "Task2Exercise.h"
 
-Task2Exercise::Task2Exercise(Matrix &src, const Generator &gen) : Exercise(src, gen) {}
+Task2Exercise::Task2Exercise(Matrix &src) : Exercise(src) {}
 
 Matrix Task2Exercise::solve()
 {
