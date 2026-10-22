@@ -123,8 +123,7 @@ TEST(Task1Test, ReplaceEvenElementsWithMaxAbsInColumn)
     m[2][1] = 2;
     m[2][2] = -8;
 
-    ConstGenerator dummyGen(0);
-    Task1Exercise task(m, dummyGen);
+    Task1Exercise task(m);
     Matrix result = task.solve();
 
     EXPECT_EQ(result.getRows(), 3u);
@@ -151,8 +150,7 @@ TEST(Task1Test, OriginalIsNotModified)
     m[1][0] = 3;
     m[1][1] = 4;
 
-    ConstGenerator dummyGen(0);
-    Task1Exercise task(m, dummyGen);
+    Task1Exercise task(m);
     task.solve();
 
     EXPECT_EQ(m[0][0], 2);
@@ -171,8 +169,7 @@ TEST(Task2Test, RemoveColumnsWithEvenFirstElement)
     m[1][2] = 3;
     m[1][3] = 4;
 
-    ConstGenerator dummyGen(0);
-    Task2Exercise task(m, dummyGen);
+    Task2Exercise task(m);
     Matrix result = task.solve();
 
     EXPECT_EQ(result.getRows(), 2u);
@@ -193,8 +190,7 @@ TEST(Task2Test, RemoveAllColumns)
     m[1][0] = 7;
     m[1][1] = 7;
 
-    ConstGenerator dummyGen(0);
-    Task2Exercise task(m, dummyGen);
+    Task2Exercise task(m);
     Matrix result = task.solve();
 
     EXPECT_EQ(result.getRows(), 0u);
