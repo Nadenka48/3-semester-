@@ -18,12 +18,12 @@ public:
      * @param src Ссылка на исходную матрицу
      */
     explicit Exercise(Matrix &src);
-    
+
     /**
      * @brief Виртуальный деструктор
      */
     virtual ~Exercise() = default;
-    
+
     /**
      * @brief Чисто виртуальный метод решения задания
      * @return Результирующая матрица после выполнения алгоритма
