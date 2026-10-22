@@ -44,13 +44,12 @@ int getInt(const char *message);
 /**
  * @brief Запустить выбранное задание
  * @param matrix Ссылка на матрицу
- * @param generator Ссылка на генератор
  */
-void runTask(Matrix &matrix, const Generator &generator);
+void runTask(Matrix &matrix);
 
 /**
  * @brief Точка входа в программу
- * @return 0, если программа выполнена успешно
+ * @return 0 в случае успеха
  */
 int main(void)
 {
@@ -75,27 +74,31 @@ int main(void)
         int minVal = getInt("Введите минимум диапазона:");
         int maxVal = getInt("Введите максимум диапазона:");
         RandomGenerator genObj(minVal, maxVal);
-        runTask(matrix, genObj);
+        matrix.fillArray(genObj);
         break;
     }
     case const_fill:
     {
         int value = getInt("Введите значение константы:");
         ConstGenerator genObj(value);
-        runTask(matrix, genObj);
+        matrix.fillArray(genObj);
         break;
     }
     case input_fill:
     {
         std::cout << "Введите значения массива:\n";
         InputGenerator genObj(std::cin);
-        runTask(matrix, genObj);
+        matrix.fillArray(genObj);
         break;
     }
     default:
         std::cerr << "Некорректный выбор генератора" << std::endl;
         std::exit(1);
     }
+
+    std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
+
+    runTask(matrix);
 
     return 0;
 }
@@ -122,7 +125,7 @@ int getInt(const char *message)
     std::exit(1);
 }
 
-void runTask(Matrix &matrix, const Generator &generator)
+void runTask(Matrix &matrix)
 {
     std::cout << "Выберите задание:\n"
               << task1_choice << " - Задание 1. Заменить четный элемент каждого столбца максимальным по модулю\n"
@@ -133,26 +136,16 @@ void runTask(Matrix &matrix, const Generator &generator)
     {
     case task1_choice:
     {
-        Task1Exercise task(matrix, generator);
-        
-        std::cout << "Полученная матрица:\n"
-                  << matrix.toString() << std::endl;
-                  
+        Task1Exercise task(matrix);
         Matrix result = task.solve();
-        std::cout << "Результат:\n"
-                  << result.toString() << std::endl;
+        std::cout << "Результат:\n" << result.toString() << std::endl;
         break;
     }
     case task2_choice:
     {
-        Task2Exercise task(matrix, generator);
-        
-        std::cout << "Полученная матрица:\n"
-                  << matrix.toString() << std::endl;
-                  
+        Task2Exercise task(matrix);
         Matrix result = task.solve();
-        std::cout << "Результат:\n"
-                  << result.toString() << std::endl;
+        std::cout << "Результат:\n" << result.toString() << std::endl;
         break;
     }
     default:
